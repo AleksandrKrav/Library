@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                           http://www.springframework.org/schema/security
+                           http://www.springframework.org/schema/security/spring-security-4.0.xsd
+                            http://www.springframework.org/schema/context
+               http://www.springframework.org/schema/context/spring-context-4.0.xsd
+               "
+>
+
+    <context:component-scan base-package="com.mylibrary"/>
+
+    <security:global-method-security secured-annotations="enabled"/>
+
+    <bean id="user" class="com.mylibrary.security.UserDetailsServiceImpl"/>
+
+
+    <security:http auto-config="true" >
+        <security:intercept-url pattern="/pages/resources/**" access="permitAll"/>
+        <security:intercept-url pattern="/pages/login.jsp" access="permitAll"/>
+        <security:intercept-url pattern="/pages/registration.jsp" access="permitAll"/>
+        <security:intercept-url pattern="/books" access="permitAll"/>
+
+        <!-- Override default login and logout pages -->
+        <security:form-login login-page="/pages/login.jsp"
+                             login-processing-url="/j_spring_security_check"
+                             default-target-url="/books"
+                             username-parameter="j_username"
+                             password-parameter="j_password"
+                             authentication-failure-url="/pages/login.jsp?error=1"/>
+        <security:logout invalidate-session="true"
+                         logout-url="/j_spring_security_logout"
+                         logout-success-url="/pages/login.jsp?logout=1"/>
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider user-service-ref="user">
+            <!--<security:password-encoder hash="sha"/>-->
+        </security:authentication-provider>
+    </security:authentication-manager>
+</beans>
