@@ -1,6 +1,11 @@
 package com.mylibrary;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +27,6 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "roles_is")
     private Role role;
-//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "users_book", joinColumns = @JoinColumn(name = "users_id", unique = false, referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "book_id", unique = false, referencedColumnName = "id"))

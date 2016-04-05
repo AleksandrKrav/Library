@@ -2,6 +2,8 @@ package com.mylibrary.impl;
 
 import com.mylibrary.*;
 import com.mylibrary.utils.HibernateUtil;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -38,6 +40,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+//    @Transactional(propagation= Propagation.REQUIRES_NEW)
     public void delete(Book object) throws PersistException {
         manager = HibernateUtil.getEntityManager();
         manager.getTransaction().begin();

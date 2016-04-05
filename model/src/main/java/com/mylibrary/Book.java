@@ -3,6 +3,7 @@ package com.mylibrary;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
 
 @Entity
 @Table(name = "book")
@@ -14,7 +15,7 @@ public class Book implements Serializable {
     private int id;
     @Column(name = "name")
     private String name;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "author_id")
     private Author author;
     @ManyToOne
@@ -26,6 +27,9 @@ public class Book implements Serializable {
     private String fileName;
     @Column(name = "data")
     private byte[] data;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "books", cascade = CascadeType.ALL)
+    private List<User> users;
 
     public Book() {
 

@@ -16,7 +16,22 @@
 
     <script src="<c:url value="https://code.jquery.com/jquery-2.1.4.js"/>" type="text/javascript"></script>
     <script src="<c:url value="http://code.jquery.com/ui/1.10.4/jquery-ui.js"/>" type="text/javascript"></script>
-
+    <script>
+        function validateNonEmpty(inputField, helptext) {
+            if (inputField.value.length == 0) {
+                if (helptext != null) {
+                    helptext.innerHTML = "Please enter the value."
+                    return false;
+                }
+                else {
+                    if (helptext != null) {
+                        helptext.innerHTML = "";
+                        return true;
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -47,7 +62,9 @@
                                 <div class="form-group auth-login-group">
                                     <label for="inputLogin" class="col-md-4 control-label">Login</label>
                                     <div class="col-md-8">
-                                        <input type="text" name="j_username" class="form-control" id="inputLogin" required/>
+                                        <input type="text" name="j_username" class="form-control" id="inputLogin"
+                                               onchange="validateNonEmpty(this, document.getElementById('login_help'))"/>
+                                        <span id="login_help"></span>
                                     </div>
                                 </div>
                                 <div class="form-group auth-pass-group">

@@ -16,6 +16,7 @@
 
     <script src="<c:url value="https://code.jquery.com/jquery-2.1.4.js"/>" type="text/javascript"></script>
     <script src="<c:url value="http://code.jquery.com/ui/1.10.4/jquery-ui.js"/>" type="text/javascript"></script>
+    <script src="<c:url value="/pages/resources/js/validRegValues.js"/>" type="text/javascript"></script>
 
 </head>
 <body>
@@ -51,28 +52,34 @@
                                 <div class="form-group reg-name-group">
                                     <label for="reg-name" class="col-md-4 control-label">Name</label>
                                     <div class="col-md-8">
-                                        <input type="text" name="reg-name" class="form-control" id="reg-name" required/>
+                                        <input type="text" name="reg-name" class="form-control" id="reg-name"
+                                               onblur="validateNonEmpty(this, document.getElementById('name_help'))"/>
+                                        <span id="name_help"></span>
                                     </div>
                                 </div>
                                 <div class="form-group reg-login-group">
                                     <label for="reg-login" class="col-md-4 control-label">Login</label>
                                     <div class="col-md-8">
                                         <input type="text" name="reg-login" class="form-control" id="reg-login"
-                                               required/>
+                                               <%--onblur="validLoginValue(this, document.getElementById('login_help'))--%>
+                                               "/>
+                                        <span id="login_help"></span>
                                     </div>
                                 </div>
                                 <div class="form-group reg-pass-group">
                                     <label for="reg-pass" class="col-md-4 control-label">Password</label>
                                     <div class="col-md-8">
                                         <input type="password" name="reg-pass" class="form-control" id="reg-pass"
-                                               required/>
+                                               onblur="validateNonEmpty(this, document.getElementById('password_help'))
+                                              "/>
+                                        <span id="pass_help"></span>
                                     </div>
                                 </div>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                 <div class="form-group pull-right">
                                     <div>
-                                        <input id="but-reg" type="submit" name="registr" value="SignUp"
-                                               class="btn btn-primary">
+                                        <input id="but-reg"  name="registr" value="SignUp"
+                                               class="btn btn-primary" onclick="checkEnter(this.form)">
                                     </div>
                                 </div>
                             </form>
